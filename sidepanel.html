@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Microstock One for All</title>
+    <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-title-group">
+                <img src="icons/icon48.png" alt="logo" class="logo">
+                <h1 id="header-title">Microstock One for All</h1>
+            </div>
+            <button id="settings-btn" class="settings-icon-btn" title="Pengaturan">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42L9.13 5.07c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12-.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c-.12-.22.07-.49.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                </svg>
+            </button>
+        </header>
+
+        <!-- APLIKASI UTAMA (Kontainer untuk tab) -->
+        <div id="main-app-container">
+            <nav class="main-nav">
+                <button class="main-nav-btn active" data-page="page-research">Research</button>
+                <button class="main-nav-btn" data-page="page-generator">Prompt</button>
+                <button class="main-nav-btn" data-page="page-image-gen">Image</button>
+                <button class="main-nav-btn" data-page="page-metadata">Metadata</button>
+            </nav>
+            
+            <!-- HALAMAN 1: RESEARCH -->
+            <section id="page-research" class="page-content active">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Input Riset</h2>
+                        <button id="toggle-research-settings-btn" class="button-icon" title="Pengaturan Riset">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+                        </button>
+                    </div>
+
+                    <div id="research-advanced-settings" class="hidden">
+                        <div class="form-group"><label for="target-website">Target Website</label><select id="target-website"><option value="adobe-stock" selected>Adobe Stock</option><option value="shutterstock">Shutterstock</option></select></div>
+                        <div class="form-group">
+                            <label>Filter Tingkat Persaingan</label>
+                            <div class="competition-filters-container">
+                                <div class="toggle-group"><label class="toggle"><input type="checkbox" id="filter-level-low" checked><span class="slider"></span></label><label for="filter-level-low">Rendah</label></div>
+                                <div class="toggle-group"><label class="toggle"><input type="checkbox" id="filter-level-medium" checked><span class="slider"></span></label><label for="filter-level-medium">Sedang</label></div>
+                                <div class="toggle-group"><label class="toggle"><input type="checkbox" id="filter-level-high" checked><span class="slider"></span></label><label for="filter-level-high">Tinggi</label></div>
+                            </div>
+                        </div>
+                        <hr class="form-separator">
+                        <label>Pengaturan Tambahan (Ambang Batas)</label>
+                        <div class="form-group" style="margin-top: 8px;">
+                            <label for="threshold-medium" style="font-weight: normal; font-size: 13px;">Batas "Sedang" (di atas angka ini)</label>
+                            <input type="number" id="threshold-medium" value="1000" min="0">
+                        </div>
+                         <div class="form-group">
+                            <label for="threshold-high" style="font-weight: normal; font-size: 13px;">Batas "Tinggi" (di atas angka ini)</label>
+                            <input type="number" id="threshold-high" value="10000" min="0">
+                        </div>
+                        <hr class="form-separator">
+                    </div>
+
+                   <div class="form-group"><label for="research-keywords">Masukkan Daftar Keyword</label><textarea id="research-keywords" rows="4" placeholder="Satu keyword per baris..."></textarea></div>
+                   <div class="separator">ATAU ANALISIS GAMBAR</div>
+                   <label class="uploader-area" id="research-uploader-area" for="research-file-input"><input type="file" id="research-file-input" class="hidden" accept="image/*"><div class="upload-label"><span>Upload Gambar untuk dianalisis</span><p>Tarik & Lepas atau Klik</p></div><div class="media-preview-container"><img class="media-preview hidden" alt="Preview"><button class="remove-media-btn hidden" title="Hapus Media">&times;</button></div></label>
+                   <div class="form-group" style="margin-top: 16px;"><label for="research-keyword-count">Jumlah Keyword dari Gambar</label><input type="number" id="research-keyword-count" value="25" min="5" max="50"></div>
+                   <button id="start-research-btn" class="primary-btn btn">Mulai Research</button>
+                </div>
+                <div class="card log-card">
+                    <div class="log-header">Log Proses Research</div>
+                    <div id="research-log" class="log-box"><p class="placeholder-text">Log proses akan muncul di sini.</p></div>
+                </div>
+                <div class="card">
+                    <div class="report-header">
+                        <h3>Laporan Hasil</h3>
+                        <div class="report-actions"><select id="research-sort-filter"><option value="results_desc">Hasil: Tinggi ke Rendah</option><option value="results_asc">Hasil: Rendah ke Tinggi</option><option value="keyword_asc">Keyword: A-Z</option><option value="keyword_desc">Keyword: Z-A</option></select></div>
+                    </div>
+                    <div class="table-container">
+                        <table id="report-table">
+                            <thead><tr><th class="checkbox-col"><input type="checkbox" id="select-all-keywords-checkbox" title="Pilih Semua"></th><th>Keyword</th><th>Hasil</th><th>Persaingan</th></tr></thead>
+                            <tbody id="report-table-body"><tr><td colspan="4" class="placeholder-text">Jalankan riset untuk melihat laporan.</td></tr></tbody>
+                        </table>
+                    </div>
+                    <div id="copy-keywords-action-group" class="hidden" style="margin-top: 16px;">
+                        <button id="copy-keywords-btn" class="primary-btn">Salin Keyword ke Prompt Gen</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- HALAMAN 2: PROMPT GENERATOR -->
+            <section id="page-generator" class="page-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Prompt Generator</h2>
+                        <button id="toggle-prompt-gen-settings-btn" class="button-icon" title="Pengaturan Lanjutan">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="form-group"><label for="generator-prompt">Tema / Keyword (Satu per baris)</label><textarea id="generator-prompt" rows="4" placeholder="Contoh: kucing oren lucu di atas"></textarea></div>
+                    <div class="separator">ATAU</div>
+                    <label class="uploader-area" id="generator-uploader-area" for="generator-file-input">
+                        <input type="file" id="generator-file-input" class="hidden" accept="image/*" multiple>
+                        <div class="upload-label"><span>Upload Gambar untuk Similarity</span><p>Tarik & Lepas atau Klik</p></div>
+                        <div class="media-preview-container" id="generator-multi-preview-container"></div>
+                        <button id="generator-remove-all-media-btn" class="secondary-btn hidden" style="width: auto; padding: 4px 10px; font-size: 12px; margin-top: 8px;">Hapus Semua</button>
+                    </label>
+                    
+                    <div id="prompt-gen-advanced-settings" class="hidden">
+                        <hr class="form-separator">
+                        <div id="prompt-similarity-group" class="form-group" style="display: none;">
+                            <label for="prompt-similarity-level">Tingkat Similaritas (Kemiripan)</label>
+                            <select id="prompt-similarity-level">
+                                <option value="balance" selected>Balance</option>
+                                <option value="low">Low Similarity</option>
+                                <option value="high">High Similarity</option>
+                                <option value="100%">97% Similarity</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="prompt-type">Jenis Prompt</label>
+                            <select id="prompt-type">
+                                <option value="image" selected>Gambar</option>
+                                <option value="video">Video</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label for="prompt-style">Gaya (Style)</label><select id="prompt-style">
+                            <option value="realistic" selected>Realistic</option>
+                            <option value="Cinematic">Cinematic</option>
+                            <option value="Vector Art">Vector Art</option>
+                            <option value="Watercolor">Watercolor</option>
+                            <option value="Anime">Anime</option>
+                            <option value="Cartoon">Cartoon</option>
+                            <option value="Digital Art">Digital Art</option>
+                            <option value="Concept Art">Concept Art</option>
+                            <option value="3D Render">3D Render</option>
+                        </select></div>
+                        <div class="form-group"><label for="prompt-count">Jumlah Prompt per Tema/Keyword</label><input type="number" id="prompt-count" value="3" min="1" max="10"></div>
+                        <div class="form-group"><label for="custom-instructions">Custom Prompt (Opsional)</label><textarea id="custom-instructions" rows="3" placeholder="Contoh: ganti warna objeknya"></textarea></div>
+                    </div>
+
+                    <div class="generate-prompts-wrapper"><button id="generate-prompts-btn" class="primary-btn" disabled>Generate Prompts</button></div>
+                    <div class="loader-container hidden"><div class="loader-bar"></div></div>
+                </div>
+
+                <div class="card log-card">
+                    <div class="log-header">Log Proses Prompt</div>
+                    <div id="prompt-gen-log" class="log-box"><p class="placeholder-text">Log proses akan muncul di sini.</p></div>
+                </div>
+
+                <div class="card result-box">
+                    <div class="card-header">
+                        <h3>Hasil Prompt</h3>
+                        <button id="clear-prompt-results-btn" class="button-icon" title="Hapus Semua">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                        </button>
+                    </div>
+                    <textarea id="prompt-results-textarea" readonly rows="10"></textarea>
+                    <div class="review-navigation">
+                        <button id="prompt-results-copy-all-btn" class="primary-btn">Salin Prompt</button>
+                        <button id="prompt-results-export-btn" class="secondary-btn">Export .txt</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- HALAMAN 3: IMAGE GENERATOR -->
+            <section id="page-image-gen" class="page-content">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Image Generator Automation</h2>
+                        <button id="toggle-image-gen-settings-btn" class="button-icon" title="Pengaturan Lanjutan">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+                        </button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image-gen-website">Pilih Website</label>
+                        <select id="image-gen-website">
+                            <option value="imagefx" selected>ImageFX</option>
+                            <option value="ai-studio">Google AI Studio</option>
+                            <option value="leonardo">Leonardo AI</option>
+                            <option value="dreamina">Dreamina AI</option>
+                            <option value="stable-diffusion">Stable Diffusion</option>
+                            <option value="whisk">Whisk</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-group-header">
+                            <label for="image-gen-prompt">Masukkan Prompt</label>
+                            <div>
+                                <input type="file" id="image-gen-prompt-import-input" class="hidden" accept=".txt">
+                                <button id="import-image-gen-prompts-btn" class="button-icon" title="Import Prompts dari .txt">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="20" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                                </button>
+                                <button id="clear-image-gen-prompts-btn" class="button-icon" title="Hapus Semua Prompt">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <textarea id="image-gen-prompt" rows="8" placeholder="Satu prompt per baris untuk dijalankan dalam mode Auto Flow..."></textarea>
+                    </div>
+                    
+                    <div id="image-gen-advanced-settings" class="hidden">
+                        <hr class="form-separator">
+                        <div class="form-group toggle-group"><label class="toggle"><input type="checkbox" id="image-gen-auto-flow-toggle"><span class="slider"></span></label><label for="image-gen-auto-flow-toggle"><strong>Auto Flow</strong></label></div>
+                        
+                        <div id="image-gen-repetition-group" class="form-group" style="display: none;">
+                            <label for="image-gen-repetition-count">Jumlah Pengulangan Flow </label>
+                            <input type="number" id="image-gen-repetition-count" value="1" min="1" max="10">
+                        </div>
+
+                        <div class="form-group"><label for="image-gen-wait-time">Waktu Tunggu (detik)</label><input type="number" id="image-gen-wait-time" value="20" min="5" step="1" title="Waktu dalam detik untuk menunggu gambar selesai digenerate."></div>
+                        
+                        <div id="image-gen-download-count-group" class="form-group"><label for="image-gen-download-count">Jumlah Download (per Prompt)</label><select id="image-gen-download-count"><option value="1">1</option><option value="2">2</option></select></div>
+                    </div>
+                    
+                    <button id="start-image-gen-btn" class="primary-btn">Generate & Download</button>
+                </div>
+                <div class="card log-card"><div class="log-header">Log Proses Generator</div><div id="image-gen-log" class="log-box"><p class="placeholder-text">Log proses akan muncul di sini.</p></div></div>
+            </section>
+
+            <!-- HALAMAN 4: METADATA -->
+            <section id="page-metadata" class="page-content">
+                <div class="card image-review-card">
+                    <div class="card-header">
+                        <h2>Pratinjau Gambar</h2>
+                        <div>
+                            <button id="toggle-metadata-settings-btn" class="button-icon" title="Pengaturan Metadata">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="22" viewBox="0 0 24 24" width="22" fill="currentColor"><path d="M0 0h24v24H0z" fill="none"/><path d="M3 17v2h6v-2H3zM3 5v2h10V5H3zm10 16v-2h8v-2h-8v-2h-2v6h2zM7 9v2H3v2h4v2h2V9H7zm14 4v-2H11v2h10zm-6-4h2V7h4V5h-4V3h-2v6z"/></svg>
+                            </button>
+                            <button id="refresh-preview-btn" title="Segarkan Pratinjau" class="button-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg></button>
+                        </div>
+                    </div>
+                    <div id="image-preview-container"><p>Buka halaman upload yang didukung.</p></div>
+                </div>
+                
+                <div class="card settings-card hidden" id="metadata-settings-card">
+                    <div class="form-group">
+                        <label for="metadata-target-website">Target Website</label>
+                        <select id="metadata-target-website">
+                            <option value="dreamstime">Dreamstime</option>
+                            <option value="adobestock">Adobe Stock</option>
+                            <option value="vecteezy">Vecteezy</option>
+                        </select>
+                    </div>
+                    
+                    <hr class="form-separator">
+                    <div class="form-group">
+                        <label>Tingkat Persaingan Keyword</label>
+                        <div class="competition-filters-container">
+                            <div class="toggle-group">
+                                <label class="toggle"><input type="checkbox" id="metadata-filter-low" checked><span class="slider"></span></label>
+                                <label for="metadata-filter-low">Rendah</label>
+                            </div>
+                            <div class="toggle-group">
+                                <label class="toggle"><input type="checkbox" id="metadata-filter-medium" checked><span class="slider"></span></label>
+                                <label for="metadata-filter-medium">Sedang</label>
+                            </div>
+                            <div class="toggle-group">
+                                <label class="toggle"><input type="checkbox" id="metadata-filter-high" checked><span class="slider"></span></label>
+                                <label for="metadata-filter-high">Tinggi</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="form-separator">
+
+                    <div class="form-group">
+                        <label for="metadata-custom-input">Custom Metadata (Opsional)</label>
+                        <input type="text" id="metadata-custom-input" placeholder="Contoh: cute cat,">
+                        <p class="description" style="margin-top: 4px; font-size: 12px;">Teks ini akan ditambahkan di awal Judul, Deskripsi, dan Keyword.</p>
+                    </div>
+
+                    <div class="form-group toggle-group"><label class="toggle"><input type="checkbox" id="ai-generated-toggle"><span class="slider"></span></label><label for="ai-generated-toggle">Tandai sebagai AI Generated</label></div>
+                    <div class="form-group toggle-group"><label class="toggle"><input type="checkbox" id="auto-flow-toggle"><span class="slider"></span></label><label for="auto-flow-toggle"><strong>Auto Flow (Proses Berulang)</strong></label></div>
+                    <div id="repetition-count-group" class="form-group" style="display: none;"><label for="repetition-count">Jumlah Pengulangan Flow</label><input type="number" id="repetition-count" value="10" min="0" max="100"></div>
+                </div>
+
+                <button id="start-stop-btn" class="primary-btn" disabled>Pilih Website Target</button>
+                <div class="card log-card"><div class="log-header">Log Proses Metadata</div><pre id="process-log"></pre></div>
+            </section>
+        </div>
+
+        <!-- HALAMAN PENGATURAN -->
+        <div id="settings-page" class="hidden">
+            <button id="back-to-app-btn" class="primary-btn" style="width: 100%; margin-bottom: 20px;">Kembali ke Menu Utama</button>
+            
+            <hr class="form-separator">
+            <h3>Pengaturan AI & Model</h3>
+            <div class="form-group">
+                <label for="ai-provider">Penyedia AI</label>
+                <select id="ai-provider">
+                    <option value="gemini" selected>Gemini</option>
+                    <option value="openai">OpenAI</option>
+                    <option value="deepseek">DeepSeek</option>
+                    <option value="openrouter">OpenRouter</option>
+                    <option value="groq">Groq</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ai-model">Model AI</label>
+                <select id="ai-model"></select>
+            </div>
+            
+            <hr class="form-separator">
+            
+            <div id="gemini-key-manager">
+                <h3>Manajemen API Key Gemini</h3>
+                <p class="description">Ekstensi akan otomatis mencoba key berikutnya jika gagal.</p>
+                <div id="gemini-api-key-list"></div>
+                <div class="form-group">
+                    <label for="new-gemini-api-key" class="api-key-label">API Key Gemini Baru</label>
+                    <input type="password" id="new-gemini-api-key" placeholder="Masukkan API Key Gemini baru">
+                    <button id="add-gemini-key-btn" class="primary-btn" style="margin-top: 8px;">Tambah</button>
+                </div>
+            </div>
+
+            <div id="openai-key-manager" class="hidden">
+                <h3>Manajemen API Key OpenAI</h3>
+                <p class="description">Ekstensi akan otomatis mencoba key berikutnya jika gagal.</p>
+                <div id="openai-api-key-list"></div>
+                <div class="form-group">
+                    <label for="new-openai-api-key" class="api-key-label">API Key OpenAI Baru</label>
+                    <input type="password" id="new-openai-api-key" placeholder="Masukkan API Key OpenAI baru (sk-...)">
+                    <button id="add-openai-key-btn" class="primary-btn" style="margin-top: 8px;">Tambah</button>
+                </div>
+            </div>
+
+            <div id="deepseek-key-manager" class="hidden">
+                <h3>Manajemen API Key DeepSeek</h3>
+                <p class="description">Ekstensi akan otomatis mencoba key berikutnya jika gagal.</p>
+                <div id="deepseek-api-key-list"></div>
+                <div class="form-group">
+                    <label for="new-deepseek-api-key" class="api-key-label">API Key DeepSeek Baru</label>
+                    <input type="password" id="new-deepseek-api-key" placeholder="Masukkan API Key DeepSeek baru (sk-...)">
+                    <button id="add-deepseek-key-btn" class="primary-btn" style="margin-top: 8px;">Tambah</button>
+                </div>
+            </div>
+
+            <div id="openrouter-key-manager" class="hidden">
+                <h3>Manajemen API Key OpenRouter</h3>
+                <p class="description">Akses model dari Anthropic, Mistral, dll. Beberapa model mendukung analisis gambar.</p>
+                <div id="openrouter-api-key-list"></div>
+                <div class="form-group">
+                    <label for="new-openrouter-api-key" class="api-key-label">API Key OpenRouter Baru</label>
+                    <input type="password" id="new-openrouter-api-key" placeholder="Masukkan API Key OpenRouter baru (sk-...)">
+                    <button id="add-openrouter-key-btn" class="primary-btn" style="margin-top: 8px;">Tambah</button>
+                </div>
+            </div>
+            
+            <div id="groq-key-manager" class="hidden">
+                <h3>Manajemen API Key Groq</h3>
+                <p class="description">Akses model Llama dan Mixtral dengan kecepatan tinggi. Tidak mendukung analisis gambar.</p>
+                <div id="groq-api-key-list"></div>
+                <div class="form-group">
+                    <label for="new-groq-api-key" class="api-key-label">API Key Groq Baru</label>
+                    <input type="password" id="new-groq-api-key" placeholder="Masukkan API Key Groq baru (gsk_...)">
+                    <button id="add-groq-key-btn" class="primary-btn" style="margin-top: 8px;">Tambah</button>
+                </div>
+            </div>
+
+            <hr class="form-separator">
+            <h3>Pengaturan Umum</h3>
+            <div class="form-group"><label for="metadata-keyword-count">Jumlah Keyword Metadata (5-50)</label><input type="number" id="metadata-keyword-count" value="25" min="5" max="50"></div>
+            
+            <hr class="form-separator">
+            <h3>Kontrol Waktu (Detik)</h3>
+            <div class="form-group">
+                <label for="step-delay">Jeda Antar Langkah (Adobe/Vecteezy)</label>
+                <input type="number" id="step-delay" value="2" min="1" max="10" title="Jeda dalam detik antara pemrosesan setiap gambar di halaman yang sama. Tidak berlaku untuk Dreamstime yang memuat ulang halaman setiap kali submit.">
+            </div>
+            <div class="form-group">
+                <label for="repetition-delay">Jeda Antar Halaman (Auto Flow)</label>
+                <input type="number" id="repetition-delay" value="5" min="2" max="30" title="Jeda dalam detik setelah halaman dimuat ulang (misalnya di Dreamstime atau setelah pindah halaman di Adobe/Vecteezy) sebelum siklus berikutnya dimulai.">
+            </div>
+            <hr class="form-separator">
+            <h3>Pengaturan Vecteezy</h3>
+            <div class="form-group"><label for="vecteezy-license">Lisensi Default</label><select id="vecteezy-license"><option value="pro">Pro</option><option value="free" selected>Free</option><option value="editorial">Editorial</option></select></div>
+            <div class="form-group"><label for="vecteezy-ai-software">Software AI</label><select id="vecteezy-ai-software"><option value="midjourney">Midjourney</option><option value="stable-diffusion">Stable Diffusion</option><option value="dall-e">DALL-E</option><option value="other" selected>Other</option></select></div>
+            <div id="vecteezy-other-software-group" class="form-group" style="display: none;"><label for="vecteezy-other-software">Nama Software Lainnya</label><input type="text" id="vecteezy-other-software" placeholder="Contoh: Firefly"></div>
+        </div>
+    </div>
+    
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast-notification"></div>
+    <script src="lib/chart.umd.js"></script>
+    <script src="lib/xlsx.full.min.js"></script>
+    <script src="lib/jspdf.umd.min.js"></script>
+    <script src="lib/jspdf.plugin.autotable.min.js"></script>
+    <script src="sidepanel.js"></script>
+</body>
+</html>
